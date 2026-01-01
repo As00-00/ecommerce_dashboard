@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import Link from "next/link";
 import { Plus, Trash2, ImageIcon, Pencil } from "lucide-react"; // Added ImageIcon for fallback
 import connectDB from "@/lib/db";
