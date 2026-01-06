@@ -69,11 +69,23 @@ export async function logout() {
   redirect("/login");
 }
 
-// --- ONBOARD NEW ADMIN ACTION ---
-export async function createAdmin(prevState: any, formData: FormData) {
+// ... keep imports ...
+
+// 1. Define the Shape (Export this!)
+export type ActionState = {
+  error?: string;
+  success?: boolean;
+  message?: string;
+};
+
+// ... keep login and logout ...
+
+// 2. Update createAdmin to use ActionState explicitly
+export async function createAdmin(prevState: ActionState, formData: FormData): Promise<ActionState> {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const token = formData.get("secretToken") as string;
+  const CREATION_TOKEN = process.env.ADMIN_CREATION_TOKEN;
 
   if (token !== CREATION_TOKEN) {
     return { error: "Invalid Secret Token! You are not authorized." };
