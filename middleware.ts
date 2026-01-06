@@ -1,30 +1,48 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { jwtVerify } from "jose";
 
-export function middleware(request: NextRequest) {
-  // 1. Check if the user has the cookie
-  const isAdmin = request.cookies.get("admin_session")?.value === "true";
+export async function middleware(request: NextRequest) {
+  // 1. Check for token
+  const token = request.cookies.get("admin_token")?.value;
+  const path = request.nextUrl.pathname;
 
-  // 2. Define protected routes (Dashboard)
-  const isDashboardRoute = request.nextUrl.pathname === "/" || request.nextUrl.pathname.startsWith("/dashboard");
+  // 2. Verify Token
+  // Use a fallback to prevent "Zero-length key" crashes if ENV is missing during dev
+  const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || "fallback_secret_for_dev");
   
-  // 3. Define public routes (Login)
-  const isLoginRoute = request.nextUrl.pathname === "/login";
+  let isValid = false;
+  if (token) {
+    try {
+      await jwtVerify(token, JWT_SECRET);
+      isValid = true;
+    } catch (error) {
+      isValid = false;
+    }
+  }
 
-  // SCENARIO 1: User tries to go to Dashboard but is NOT logged in
-  if (isDashboardRoute && !isAdmin) {
+  // 3. Define Routes
+  // "/login" is the only public page
+  const isLoginPage = path === "/login";
+  
+  // PROTECTED ROUTES: The root "/" AND anything under "/dashboard"
+  const isProtectedRoute = path === "/" || path.startsWith("/dashboard");
+
+  // SCENARIO 1: Not logged in -> Trying to access Admin pages (Root or Dashboard)
+  if (isProtectedRoute && !isValid) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // SCENARIO 2: User is ALREADY logged in but tries to go to Login page
-  if (isLoginRoute && isAdmin) {
+  // SCENARIO 2: Already logged in -> Trying to access Login
+  if (isLoginPage && isValid) {
+    // Redirect them to the Root (which is your Dashboard)
     return NextResponse.redirect(new URL("/", request.url));
   }
 
   return NextResponse.next();
 }
 
-// Config tells Next.js which routes to run this middleware on
+// Config: Explicitly match the routes we care about
 export const config = {
-  matcher: ["/", "/dashboard/:path*", "/login"],
+  matcher: ["/", "/login", "/dashboard/:path*"],
 };

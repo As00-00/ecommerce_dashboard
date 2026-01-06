@@ -4,16 +4,15 @@ import EditProductForm from "@/components/EditProductForm";
 import { redirect } from "next/navigation";
 
 interface EditPageProps {
-  params: Promise<{ id: string }>; // Update Type: It's a Promise now!
+  params: Promise<{ id: string }>;
 }
 
 export default async function EditPage({ params }: EditPageProps) {
-  // 1. UNWRAP THE PARAMS FIRST (The Fix)
+
   const { id } = await params;
 
   await connectDB();
   
-  // 2. Now use the unwrapped 'id'
   const product = await Product.findById(id);
 
   if (!product) {
@@ -27,7 +26,9 @@ export default async function EditPage({ params }: EditPageProps) {
     stock: product.stock,
     description: product.description || "",
     imageUrl: product.imageUrl || "",
-  };
+    brand:product.brand,
+    category:product.category,
+    isFeatured: product.isFeatured === true || product.isFeatured === "true" || product.isFeatured === "on",  };
 
   return (
     <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow">

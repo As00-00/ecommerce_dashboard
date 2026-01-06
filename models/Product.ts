@@ -17,22 +17,30 @@ const ProductSchema = new Schema(
     },
     description: {
       type: String,
+      default:"No description provided yet"
     },
     category: {
       type: String,
+      required:[true,"Category is required"]
+    },
+    brand:{
+      type:String,required:[true,"brand is required"]
     },
     imageUrl: {
-      type: String, // We will just store the URL string from Cloudinary
+      type: String, 
+    },
+    isFeatured:{
+      type:Boolean,
+      default:false,
     },
   },
   {
-    timestamps: true, // Automatically adds createdAt and updatedAt
+    timestamps: true,
   }
 );
-
-// This check is important!
-// In Next.js, this file might run multiple times.
-// We check: "Does the model already exist?" If yes, use it. If no, create it.
+if (mongoose.models.Product) {
+  delete mongoose.models.Product;
+}
 const Product = models.Product || model("Product", ProductSchema);
 
 export default Product;

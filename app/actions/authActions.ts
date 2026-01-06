@@ -1,42 +1,101 @@
 "use server";
 
+import { SignJWT } from "jose";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import connectDB from "@/lib/db";
+import Admin from "@/models/Admin";
+import bcrypt from "bcryptjs";
 
-// REMOVE the hardcoded strings.
-// REPLACE them with process.env calls.
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
+const MASTER_EMAIL = process.env.ADMIN_EMAIL;
+const MASTER_PASSWORD = process.env.ADMIN_PASSWORD;
+const CREATION_TOKEN = process.env.ADMIN_CREATION_TOKEN;
 
+// --- LOGIN ACTION ---
 export async function login(prevState: any, formData: FormData) {
-  const email = formData.get("email");
-  const password = formData.get("password");
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
 
-  // Safety Check: If someone forgot to set the .env variables, don't let anyone in.
-  if (!ADMIN_EMAIL || !ADMIN_PASSWORD) {
-    return { error: "Server misconfiguration: Credentials not set" };
+  await connectDB();
+
+  let isAuthenticated = false;
+
+  // 1. Check Master Admin (.env)
+  if (email === MASTER_EMAIL && password === MASTER_PASSWORD) {
+    isAuthenticated = true;
+  } 
+  // 2. If not Master, check Database
+  else {
+    const adminUser = await Admin.findOne({ email });
+    if (adminUser) {
+      const isMatch = await bcrypt.compare(password, adminUser.password);
+      if (isMatch) isAuthenticated = true;
+    }
   }
 
-  // Compare input against the environment variables
-  if (email !== ADMIN_EMAIL || password !== ADMIN_PASSWORD) {
+  if (!isAuthenticated) {
     return { error: "Invalid email or password" };
   }
 
-  // ... (The rest of the file stays exactly the same)
-  const cookieStore = await cookies();
-  cookieStore.set("admin_session", "true", {
+  // 3. Create Session
+  const token = await new SignJWT({ email, role: "admin" })
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .setExpirationTime("24h")
+    .sign(JWT_SECRET);
+
+  // 👇 FIX: Must await cookies() before setting
+  (await cookies()).set("admin_token", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    maxAge: 60 * 60 * 24,
+    maxAge: 60 * 60 * 24, 
     path: "/",
   });
 
   redirect("/");
 }
 
-// ... (Logout function stays the same)
+// --- LOGOUT ACTION ---
 export async function logout() {
-  const cookieStore = await cookies();
-  cookieStore.delete("admin_session");
+  // 1. Force cookie expiration by setting Max-Age to 0
+  (await cookies()).set("admin_token", "", { 
+    expires: new Date(0), 
+    path: "/", // Crucial: Must match the path used when setting the cookie
+    maxAge: 0 
+  });
+
+  // 2. Redirect to login
   redirect("/login");
+}
+
+// --- ONBOARD NEW ADMIN ACTION ---
+export async function createAdmin(prevState: any, formData: FormData) {
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+  const token = formData.get("secretToken") as string;
+
+  if (token !== CREATION_TOKEN) {
+    return { error: "Invalid Secret Token! You are not authorized." };
+  }
+
+  await connectDB();
+
+  try {
+    const existingAdmin = await Admin.findOne({ email });
+    if (existingAdmin) {
+      return { error: "Admin with this email already exists." };
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await Admin.create({
+      email,
+      password: hashedPassword,
+    });
+
+    return { success: true, message: "New Admin created successfully!" };
+  } catch (error) {
+    return { error: "Failed to create admin." };
+  }
 }

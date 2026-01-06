@@ -14,8 +14,7 @@ interface MongooseCache {
   promise: Promise<typeof mongoose> | null;
 }
 
-// In development, we attach the connection to the global object
-// so it survives "Hot Reloads" (when you save a file and the server refreshes).
+
 let cached: MongooseCache = (global as any).mongoose;
 
 if (!cached) {
