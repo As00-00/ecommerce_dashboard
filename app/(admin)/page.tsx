@@ -39,22 +39,22 @@ export default async function DashboardPage() {
     categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
   });
 
-  // ... inside DashboardPage function ...
+  
 
-  // --- CHART DATA PREP ---
-  const brandCounts: { [key: string]: number } = {}; // <--- New Object
+
+  const brandCounts: { [key: string]: number } = {}; 
   
   products.forEach((p: any) => {
-    // Count Categories
+
     const cat = p.category || "Uncategorized";
     categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
 
-    // Count Brands
+    
     const brand = p.brand || "No Brand";
     brandCounts[brand] = (brandCounts[brand] || 0) + 1;
   });
 
-  // Convert to Arrays
+  
   const categoryData = Object.keys(categoryCounts).map(key => ({
     name: key,
     value: categoryCounts[key]
@@ -64,7 +64,7 @@ export default async function DashboardPage() {
     name: key,
     value: brandCounts[key]
   }));
-  // -----------------------
+
   return (
     <div className="p-8 max-w-7xl mx-auto">
 
@@ -73,7 +73,7 @@ export default async function DashboardPage() {
         <p className="text-gray-500 mt-1">Overview of your inventory performance</p>
       </div>
 
-      {/* TOP STATS GRID */}
+      
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <StatCard 
           title="Total Inventory" 
@@ -104,15 +104,15 @@ export default async function DashboardPage() {
           color="bg-amber-500" 
         />
       </div>
-      {/* CHARTS ROW */}
+      
        <div className="mb-8">
           <CategoryChart categoryData={categoryData} brandData={brandData} />
        </div>
 
-      {/* SPLIT SECTION: Recent Items (Left) & Alerts (Right) */}
+      
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        {/* LEFT COLUMN: RECENT PRODUCTS */}
+
         <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="p-6 border-b border-gray-100 flex justify-between items-center">
             <h3 className="font-bold text-lg text-gray-800 flex items-center gap-2">
@@ -156,10 +156,10 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        {/* RIGHT COLUMN: ALERTS & ACTIONS */}
+
         <div className="flex flex-col gap-6">
           
-          {/* Low Stock Widget */}
+
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
             <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5 text-red-500" />
@@ -189,7 +189,7 @@ export default async function DashboardPage() {
             )}
           </div>
 
-          {/* Quick Actions Widget */}
+
           <div className="bg-gradient-to-br from-emerald-600 to-teal-700 p-6 rounded-xl shadow-md text-white">
             <h3 className="font-bold text-lg mb-2">Quick Actions</h3>
             <p className="text-emerald-100 text-sm mb-4">Manage your store efficiently.</p>

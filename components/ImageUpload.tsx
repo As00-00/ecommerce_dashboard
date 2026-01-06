@@ -11,7 +11,6 @@ interface ImageUploadProps {
 }
 
 export default function ImageUpload({ onUpload, value }: ImageUploadProps) {
-  // We need this mounted check to avoid hydration errors with the widget
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -22,10 +21,8 @@ export default function ImageUpload({ onUpload, value }: ImageUploadProps) {
 
   return (
     <div className="flex items-center gap-4">
-      {/* If we have an image, show a preview */}
       {value && (
         <div className="relative w-40 h-40 rounded-lg overflow-hidden border border-gray-300">
-          {/* changed from <Image> to <img> to prevent layout issues */}
           <img
             className="h-full w-full object-cover"
             alt="Upload"
@@ -41,10 +38,9 @@ export default function ImageUpload({ onUpload, value }: ImageUploadProps) {
         </div>
       )}
 
-      {/* The Upload Button */}
-      {/* REPLACE 'your_cloud_name' if needed, though usually it auto-detects from env */}
+    
       <CldUploadWidget
-        uploadPreset="dashboard_preset" // <--- PASTE YOUR PRESET HERE
+        uploadPreset="dashboard_preset" 
         onSuccess={(result: any) => {
           onUpload(result.info.secure_url);
         }}

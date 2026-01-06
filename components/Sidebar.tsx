@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { LayoutDashboard, Package, UserPlus, LogOut } from "lucide-react";
 import { logout } from "@/app/actions/authActions";
 
-// This is just a list of our links. Easy to add more later.
 const navLinks = [
   { name: "Dashboard", href: "/", icon: LayoutDashboard },
   { name: "Products", href: "/dashboard/products", icon: Package },
@@ -31,8 +30,8 @@ export default function Sidebar() {
               href={link.href}
               className={`flex items-center gap-3 rounded-lg px-4 py-3 transition-colors ${
                 isActive
-                  ? "bg-emerald-600 text-white" // Active Style
-                  : "text-gray-400 hover:bg-gray-800 hover:text-white" // Inactive Style
+                  ? "bg-emerald-600 text-white" 
+                  : "text-gray-400 hover:bg-gray-800 hover:text-white" 
               }`}
             >
               <Icon className="h-5 w-5" />

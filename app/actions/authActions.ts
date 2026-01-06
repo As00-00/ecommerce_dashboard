@@ -12,7 +12,7 @@ const MASTER_EMAIL = process.env.ADMIN_EMAIL;
 const MASTER_PASSWORD = process.env.ADMIN_PASSWORD;
 const CREATION_TOKEN = process.env.ADMIN_CREATION_TOKEN;
 
-// --- LOGIN ACTION ---
+
 export async function login(prevState: any, formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
@@ -21,11 +21,11 @@ export async function login(prevState: any, formData: FormData) {
 
   let isAuthenticated = false;
 
-  // 1. Check Master Admin (.env)
+
   if (email === MASTER_EMAIL && password === MASTER_PASSWORD) {
     isAuthenticated = true;
   } 
-  // 2. If not Master, check Database
+
   else {
     const adminUser = await Admin.findOne({ email });
     if (adminUser) {
@@ -38,14 +38,14 @@ export async function login(prevState: any, formData: FormData) {
     return { error: "Invalid email or password" };
   }
 
-  // 3. Create Session
+
   const token = await new SignJWT({ email, role: "admin" })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime("24h")
     .sign(JWT_SECRET);
 
-  // 👇 FIX: Must await cookies() before setting
+
   (await cookies()).set("admin_token", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
@@ -56,31 +56,25 @@ export async function login(prevState: any, formData: FormData) {
   redirect("/");
 }
 
-// --- LOGOUT ACTION ---
 export async function logout() {
-  // 1. Force cookie expiration by setting Max-Age to 0
   (await cookies()).set("admin_token", "", { 
     expires: new Date(0), 
-    path: "/", // Crucial: Must match the path used when setting the cookie
+    path: "/", 
     maxAge: 0 
   });
 
-  // 2. Redirect to login
+
   redirect("/login");
 }
 
-// ... keep imports ...
 
-// 1. Define the Shape (Export this!)
 export type ActionState = {
   error?: string;
   success?: boolean;
   message?: string;
 };
 
-// ... keep login and logout ...
 
-// 2. Update createAdmin to use ActionState explicitly
 export async function createAdmin(prevState: ActionState, formData: FormData): Promise<ActionState> {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;

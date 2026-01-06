@@ -1,7 +1,7 @@
 "use client";
 
 import { createAdmin } from "@/app/actions/authActions";
-import { useActionState } from "react"; // Updated hook for Next.js 14/15
+import { useActionState } from "react"; 
 import { UserPlus, Lock, Key } from "lucide-react";
 
 const initialState = {
@@ -28,7 +28,7 @@ export default function OnboardAdminPage() {
 
       <form action={action} className="space-y-4">
         
-        {/* New Admin Credentials */}
+    
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">New Email</label>
@@ -54,7 +54,7 @@ export default function OnboardAdminPage() {
 
         <hr className="my-6 border-gray-100" />
 
-        {/* Security Check */}
+        
         <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
           <label className="block text-sm font-bold text-gray-700 mb-2 flex items-center gap-2">
             <Key className="w-4 h-4 text-gray-500" />
@@ -72,7 +72,7 @@ export default function OnboardAdminPage() {
           </p>
         </div>
 
-        {/* Messages */}
+        
         {state?.error && (
           <div className="p-3 bg-red-50 text-red-600 text-sm rounded-lg border border-red-100 flex items-center gap-2">
             <Lock className="w-4 h-4" /> {state.error}

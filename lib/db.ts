@@ -8,7 +8,6 @@ if (!MONGODB_URI) {
   );
 }
 
-// Global interface to prevent TypeScript errors
 interface MongooseCache {
   conn: typeof mongoose | null;
   promise: Promise<typeof mongoose> | null;

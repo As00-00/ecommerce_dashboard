@@ -179,11 +179,10 @@ export default function ProductTable({ products }: { products: Product[] }) {
                 className={`flex flex-col md:flex-row gap-4 border p-4 rounded-lg bg-white shadow-sm transition-all relative ${
                   isExpanded ? "ring-1 ring-emerald-100" : ""
                 } ${
-                  // Optional: Add a subtle gold border/glow for featured items
+            
                   product.isFeatured ? "border-amber-200 bg-amber-50/30" : ""
                 }`}
               >
-                {/* FEATURED BADGE (Optional corner ribbon) */}
                 {product.isFeatured && (
                   <div className="absolute top-0 right-0 bg-amber-400 text-white text-[10px] font-bold px-2 py-0.5 rounded-bl-lg rounded-tr-lg z-10 shadow-sm">
                     FEATURED
@@ -191,7 +190,6 @@ export default function ProductTable({ products }: { products: Product[] }) {
                 )}
 
                 <div className="flex items-start gap-4 flex-1">
-                  {/* Image Section */}
                   <div className="relative rounded-md border border-gray-200 bg-gray-50 overflow-hidden shrink-0 w-16 h-16">
                     {product.imageUrl ? (
                       <img
@@ -211,7 +209,6 @@ export default function ProductTable({ products }: { products: Product[] }) {
                       <h2 className="font-semibold text-lg text-gray-800">
                         {product.name}
                       </h2>
-                      {/* STAR ICON for Featured Products */}
                       {product.isFeatured && (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -246,7 +243,6 @@ export default function ProductTable({ products }: { products: Product[] }) {
                   </div>
                 </div>
 
-                {/* ... (Description and Action Buttons remain the same) ... */}
                 <div className="flex-1 text-sm text-gray-600 min-w-[200px]">
                   <p>
                     {displayDesc}
@@ -262,7 +258,6 @@ export default function ProductTable({ products }: { products: Product[] }) {
                 </div>
 
                 <div className="flex items-center gap-2 self-start md:self-center">
-                  {/* Edit Link */}
                   <div className="group relative flex flex-col items-center">
                     <Link
                       href={`/dashboard/products/${product._id}`}
@@ -275,7 +270,6 @@ export default function ProductTable({ products }: { products: Product[] }) {
                     </span>
                   </div>
 
-                  {/* Delete Form */}
                   <form
                     action={deleteProduct}
                     className="group relative flex flex-col items-center"

@@ -5,7 +5,7 @@ import Product from "@/models/Product";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-// --- ADD PRODUCT (Uses Dropdown) ---
+
 export async function addProduct(formData: FormData) {
   await connectDB();
 
@@ -17,9 +17,7 @@ export async function addProduct(formData: FormData) {
   const brand = formData.get("brand");
   const category = formData.get("category");
 
-  // 👇 LOGIC FOR DROPDOWN
-  // Dropdown sends string "true" or "false".
-  // We compare strictly to the word "true".
+
   const isFeatured = formData.get("isFeatured") === "true";
 
   try {
@@ -43,7 +41,7 @@ export async function addProduct(formData: FormData) {
   redirect("/dashboard/products");
 }
 
-// --- UPDATE PRODUCT (Uses Checkbox) ---
+
 export async function updateProduct(formData: FormData) {
   await connectDB();
 
@@ -56,9 +54,7 @@ export async function updateProduct(formData: FormData) {
   const brand = formData.get("brand");
   const category = formData.get("category");
   
-  // 👇 LOGIC FOR CHECKBOX
-  // Checkbox sends "on" if checked, null if unchecked.
-  // We check if it equals "on".
+
   const isFeatured = formData.get("isFeatured") === "on";
 
   if (!id) throw new Error("Product ID is missing");
@@ -84,7 +80,7 @@ export async function updateProduct(formData: FormData) {
   redirect("/dashboard/products");
 }
 
-// --- DELETE PRODUCT ---
+
 export async function deleteProduct(formData: FormData) {
   const id = formData.get("id");
   await connectDB();
