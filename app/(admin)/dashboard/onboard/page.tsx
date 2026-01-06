@@ -9,7 +9,6 @@ const initialState = {
   success: false,
   message: ""
 };
-"use client";
 
 
 export default function OnboardAdminPage() {
