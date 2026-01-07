@@ -55,12 +55,12 @@ npm install
 Create a `.env` file:
 
 ```env
-MONGODB_URI=mongodb+srv://admin:admin12345@cluster0.hoabwas.mongodb.net/ecommerce-dashboard?appName=Cluster0
-NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=dqggnxrna
-JWT_SECRET="any_random_long_string"
-ADMIN_CREATION_TOKEN="abcd"
-ADMIN_EMAIL=admin@example.com
-ADMIN_PASSWORD=securepassword123
+MONGODB_URI=your mongodb uri
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your cloudinary cloud name
+JWT_SECRET=your jwt secret key
+ADMIN_CREATION_TOKEN=admin_creation token
+ADMIN_EMAIL=admin_email
+ADMIN_PASSWORD=admin_password
 ```
 Open http://localhost:3000
 
