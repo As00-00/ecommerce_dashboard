@@ -3,7 +3,7 @@
 A robust, full-stack E-commerce Administration Panel built with **Next.js 15 (App Router)**. This application manages product inventory, visualizes sales data in real-time, and secures administrative access using custom JWT authentication and Middleware.
 
 ### 🚀 **[View Live Deployment](https://ecommerce-dashboard-hcwk.vercel.app)**
-*(Login required - See "Test Credentials" below)*
+*(Login required - See "google drive)*
 
 ---
 
