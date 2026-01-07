@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+🚀 Live Demo
+View Live Deployment (Login required - See "Test Credentials" below)
 
-## Getting Started
+✨ Key Features
+🛡️ Advanced Security
+Custom JWT Authentication: Implemented via jose with HttpOnly cookies for secure session management.
 
-First, run the development server:
+Middleware Protection: Automatic redirection for unauthorized access on protected routes.
 
-```bash
+Admin Onboarding Portal: A secure "backdoor" to register new admins, protected by a secret environment token.
+
+📦 Inventory Management
+Full CRUD Operations: Create, Read, Update, and Delete products seamlessly.
+
+Cloudinary Integration: Drag-and-drop image uploads that are automatically optimized and hosted on the cloud.
+
+Smart State Management: Solved complex state issues (like "sticky" checkboxes) using React hooks and strict type checking.
+
+📊 Data Visualization
+Interactive Charts: Real-time bar charts powered by Recharts to visualize inventory distribution by Category and Brand.
+
+Dashboard Stats: Instant overview of Total Inventory Value and Low Stock Alerts.
+
+🛠️ Tech Stack
+Framework: Next.js 15 (App Router)
+
+Language: TypeScript
+
+Database: MongoDB (Mongoose ODM)
+
+Styling: Tailwind CSS
+
+Icons: Lucide React
+
+Deployment: Vercel
+
+⚙️ Local Setup Instructions
+Clone the repository
+
+Bash
+
+git clone https://github.com/As00-00/ecommerce_dashboard.git
+cd ecommerce_dashboard
+Install dependencies
+
+Bash
+
+npm install
+Set up Environment Variables Create a .env file in the root directory:
+
+Code snippet
+
+MONGODB_URI=your_mongodb_string
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
+JWT_SECRET=your_random_secret_string
+ADMIN_CREATION_TOKEN=secret_token_for_onboarding
+ADMIN_EMAIL=master@admin.com
+ADMIN_PASSWORD=master_password
+Run the development server
+
+Bash
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+🔐 Test Credentials
+To test the application, you can use these demo credentials (or create your own via the Onboard page):
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Email: admin@example.com
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Password: securepassword123
