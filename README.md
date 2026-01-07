@@ -41,3 +41,27 @@ A robust, full-stack E-commerce Administration Panel built with **Next.js 15 (Ap
 ```bash
 git clone https://github.com/As00-00/ecommerce_dashboard.git
 cd ecommerce_dashboard
+```
+
+```markdown
+### 2. Install Dependencies
+```bash
+npm install
+```
+
+```markdown
+### 3. Configure Environment Variables
+
+Create a `.env` file:
+
+```env
+MONGODB_URI=your_mongodb_connection_string
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
+JWT_SECRET=any_long_random_string_here
+ADMIN_CREATION_TOKEN=my-super-secret-token-123
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD=securepassword123
+```
+Open http://localhost:3000
+
+
