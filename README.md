@@ -55,10 +55,10 @@ npm install
 Create a `.env` file:
 
 ```env
-MONGODB_URI=your_mongodb_connection_string
-NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
-JWT_SECRET=any_long_random_string_here
-ADMIN_CREATION_TOKEN=my-super-secret-token-123
+MONGODB_URI=mongodb+srv://admin:admin12345@cluster0.hoabwas.mongodb.net/ecommerce-dashboard?appName=Cluster0
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=dqggnxrna
+JWT_SECRET="any_random_long_string"
+ADMIN_CREATION_TOKEN="abcd"
 ADMIN_EMAIL=admin@example.com
 ADMIN_PASSWORD=securepassword123
 ```
