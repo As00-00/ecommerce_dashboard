@@ -64,4 +64,6 @@ ADMIN_PASSWORD=securepassword123
 ```
 Open http://localhost:3000
 
+### 4.Author
+Aryan Sankhla - full Stack Developer
 
