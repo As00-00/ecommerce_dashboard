@@ -43,13 +43,13 @@ git clone https://github.com/As00-00/ecommerce_dashboard.git
 cd ecommerce_dashboard
 ```
 
-```markdown
+
 ### 2. Install Dependencies
 ```bash
 npm install
 ```
 
-```markdown
+
 ### 3. Configure Environment Variables
 
 Create a `.env` file:
