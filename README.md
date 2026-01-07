@@ -44,3 +44,39 @@ Follow these steps to run the project locally on your machine.
 ```bash
 git clone [https://github.com/As00-00/ecommerce_dashboard.git](https://github.com/As00-00/ecommerce_dashboard.git)
 cd ecommerce_dashboard
+
+### 2. Install Dependencies
+```bash
+npm install
+
+### 3. Configure Environment Variables
+Create a .env file in the root directory and add the following keys:
+```Code snippet
+# MongoDB Connection
+MONGODB_URI=your_mongodb_connection_string
+
+# Cloudinary (Image Upload)
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
+
+# Authentication Secrets
+JWT_SECRET=any_long_random_string_here
+ADMIN_CREATION_TOKEN=my-super-secret-token-123
+
+# Master Admin (Initial Access)
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD=securepassword123
+
+
+### 4. Run the Development Server
+```bash
+npm run dev
+
+Open http://localhost:3000 in your browser.
+
+
+### Author
+Aryan Sankhla - Full Stack Developer
+
+
+
+
